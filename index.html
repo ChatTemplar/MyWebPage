@@ -1,105 +1,114 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-
     <meta charset="UTF-8">
-    <meta name="ChatTemplar's Paradise">
-    <meta content="Portfolio">
-
-    <title>ChatTemplar</title>
-
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Matrix Digital Rain</title>
     <style>
         body {
-            margin-left: auto;
-            margin-right: auto;
-            text-align: center;
+            margin: 0;
+            padding: 0;
+            background-color: black;
+            overflow: hidden;
             font-family: 'Courier New', monospace;
         }
-        table.center {
-            margin-left: auto;
-            margin-right: auto;
-            border: 4px solid cornflowerblue;
-            padding: 4px;
-            color: dodgerblue;
-        }
+
         .container {
-            display: grid;
-            align-items: center;
-            grid-template-columns: 1fr 1fr 1fr;
-            column-gap: 5px;
+            position: relative;
+            width: 100vw;
+            height: 100vh;
         }
-        .image1 {
-            max-width: 100%;
-            max-height:100%;
+
+        .column {
+            position: absolute;
+            top: 0;
+            width: 20px;
+            height: 100vh;
+            color: #0f0;
+            text-shadow: 0 0 5px #0f0,
+                         0 0 10px #0f0,
+                         0 0 20px #0f0,
+                         0 0 40px #0f0;
+            animation: glow 2s infinite;
+            opacity: 0.8;
+        }
+
+        .character {
+            position: absolute;
+            animation: fall linear infinite;
+            opacity: 0;
+        }
+
+        @keyframes fall {
+            0% {
+                transform: translateY(-100%);
+                opacity: 0;
+            }
+            5% {
+                opacity: 1;
+            }
+            90% {
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(100vh);
+                opacity: 0;
+            }
+        }
+
+        @keyframes glow {
+            0%, 100% { opacity: 0.8; }
+            50% { opacity: 1; }
         }
     </style>
-
 </head>
-
 <body>
+    <div class="container" id="matrixContainer"></div>
 
-    <h1>ChatTemplar</h1>
+    <script>
+        const characters = '01!@#$%^&*ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyzｦｧｨｩｪｫｬｭｮｯｰｱｲｳｴｵｶｷｸｹｺｻｼｽｾｿﾀﾁﾂﾃ';
+        const container = document.getElementById('matrixContainer');
+        const columnCount = Math.floor(window.innerWidth / 20);
 
-    <table class="center">
-        <tr>
-            <td>
-                <a href="https://github.com/ChatTemplar">My GitHub</a>
-            </td>
-            <td>
-                <a href="https://youtu.be/d1YBv2mWll0?si=QmEN3rI1I1w9e3Ow">Youtube</a>
-            </td>
-            <td>
-                <a href="https://www.youtube.com/watch?v=dQw4w9WgXcQ">SpicyLinks</a>
-            </td>
-        </tr>
-    </table>
+        // Create columns
+        for (let i = 0; i < columnCount; i++) {
+            const column = document.createElement('div');
+            column.className = 'column';
+            column.style.left = i * 20 + 'px';
+            container.appendChild(column);
+        }
 
-    <p>Trying out stuff in js, html, css, python and lua.<br /></p>
+        // Generate random characters
+        function createCharacter(column) {
+            const character = document.createElement('div');
+            character.className = 'character';
+            character.textContent = characters[Math.floor(Math.random() * characters.length)];
+            
+            const animationDuration = Math.random() * 3 + 2;
+            const delay = Math.random() * 3 + 2;
+            
+            character.style.animation = `fall ${animationDuration}s linear ${delay}s infinite`;
+            character.style.fontSize = Math.floor(Math.random() * 10 + 15) + 'px';
+            
+            column.appendChild(character);
 
-    <img src="Images/Nyancat.png">
+            // Remove character after animation
+            character.addEventListener('animationend', () => {
+                character.remove();
+            });
+        }
 
-    <p>This code is pretty messy and not optimal.<br />But Trying is fun so let's go ;D</p><br />
+        // Start animation for all columns
+        document.querySelectorAll('.column').forEach(column => {
+            setInterval(() => {
+                createCharacter(column);
+            }, Math.random() * 100 + 50);
+        });
 
-    <div class="container">
-
-        <div class="image1">
-            <img src="Images/knight.jpg">
-        </div>
-
-        <div class="text1">
-             <p>
-                 Cool knight? I think so. And you should too!
-             </p>
-        </div>
-
-        <div class="image1">
-            <img src="Images/knight.jpg">
-        </div>
-
-    </div>
-
-    <p>
-        Linked Image? -> <a href="https://store.steampowered.com/app/2140020/Stronghold_Definitive_Edition/"> <img src="Images/kappa.png"></a> (serious skill involved)<br /><br/><br/>
-        And another one <img src="Images/Pog.webp"><br/><br/>
-        <a href="https://store.steampowered.com/app/2140020/Stronghold_Definitive_Edition/"><img src="Images/stronghold.jpg" style="padding: 200px;"></a>
-    </p>
-    <h2 style="padding: 20px;">
-        That's it, im done.
-    </h2>
-    <h3>Plugging the Socials again. This time no Trollerino <img src="Images/kappa.png"></h3>
-    <table class="center">
-        <tr>
-            <td>
-                <a href="https://github.com/ChatTemplar">My GitHub</a>
-            </td>
-            <td>
-                <a href="https://youtu.be/d1YBv2mWll0?si=QmEN3rI1I1w9e3Ow">Youtube</a>
-            </td>
-            <td>
-                <a href="https://www.youtube.com/watch?v=dQw4w9WgXcQ">SpicyLinks</a>
-            </td>
-        </tr>
-    </table>
-
+        // Handle window resize
+        window.addEventListener('resize', () => {
+            window.location.reload();
+        });
+    </script>
 </body>
 </html>
